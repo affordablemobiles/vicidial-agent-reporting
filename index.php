@@ -2,6 +2,8 @@
 
 ini_set('display_errors', 'On');
 
+date_default_timezone_set("Europe/London");
+
 require "class/class.Queue.php";
 require "class/class.Campaign.php";
 require "class/class.Campaign_Inbound.php";
