@@ -10,7 +10,9 @@ class Campaign_Inbound {
     private $agent;
 
     public function __construct($id){
+        $this->id = $id;
 
+        $this->_fetchQueues();
     }
 
     public function setTimePeriod($startEpoch, $endEpoch){
