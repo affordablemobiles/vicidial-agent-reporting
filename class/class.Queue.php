@@ -57,6 +57,10 @@ class Queue {
     public function getTotalByDispo(){
     }
 
+    public function getTotalDirectByDispo(){
+
+    }
+
     private function _getTotalDirect($additional_where){
         global $db;
 
@@ -73,7 +77,8 @@ class Queue {
                                 lead_id IN (SELECT lead_id FROM `vicidial_closer_log` WHERE campaign_id = '" . $db->escape_string($this->id) . "')
                             AND
                                 start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
-                            " . ( $additional_where != "" ? "AND " . $additional_where : "" ) . "
+                            " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
+                            " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                             GROUP BY lead_id
                         ) a
                     WHERE
@@ -84,7 +89,7 @@ class Queue {
             $row = $result->fetch_assoc();
             return $row['num'];
         } else {
-            return false;
+            return 0;
         }
     }
 }
