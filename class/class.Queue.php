@@ -71,7 +71,8 @@ class Queue {
                         campaign_id = '" . $db->escape_string($this->id) . "'
                     AND
                         start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
-                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" );
+                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
+                    GROUP BY status";
 
         $data = array();
         $result = $db->query($sql);
@@ -108,8 +109,6 @@ class Queue {
                     WHERE
                         a.agentcount = 1
                     GROUP BY status";
-
-        print_r($sql);
 
         $data = array();
         $result = $db->query($sql);
