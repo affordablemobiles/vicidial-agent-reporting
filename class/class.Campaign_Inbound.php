@@ -12,8 +12,10 @@ class Campaign_Inbound {
     public function __construct($id){
         $this->id = $id;
 
+        $this->startEpoch = mktime(0, 0, 0);
+        $this->endEpoch = mktime(23, 59, 59);
+
         $this->_fetchQueues();
-        print_r($this->queues);
         $this->_initObjects();
     }
 
@@ -22,10 +24,14 @@ class Campaign_Inbound {
             $this->startEpoch = $startEpoch;
             $this->endEpoch = $endEpoch;
         }
+
+        $this->_setTimePeriodAll();
     }
 
     public function setAgent($agent){
         $this->agent = $agent;
+
+        $this->_setAgentAll();
     }
 
     private function _setTimePeriodAll(){

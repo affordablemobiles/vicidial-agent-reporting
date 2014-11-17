@@ -29,12 +29,6 @@ class Queue {
     public function getTotalAnswered(){
     }
 
-    public function getTotalDirect(){
-    }
-
-    public function getTotalDirectAnswered(){
-    }
-
     public function getTotalOOH(){
     }
 
@@ -44,6 +38,53 @@ class Queue {
     public function getTotalAbandoned(){
     }
 
+    public function getTotalDirect(){
+        return $this->_getTotalDirect("");
+    }
+
+    public function getTotalDirectAnswered(){
+        return $this->_getTotalDirect("status <> 'DROP' AND status <> 'AFTHRS'");
+    }
+
+    public function getTotalDirectOOH(){
+        return $this->_getTotalDirect("status = 'AFTHRS'");
+    }
+
+    public function getTotalDirectDrop(){
+        return $this->_getTotalDirect("status = 'DROP'");
+    }
+
     public function getTotalByDispo(){
+    }
+
+    private function _getTotalDirect($additional_where){
+        global $db;
+
+        $sql = "    SELECT
+                        COUNT(*) as 'num'
+                    FROM
+                        (
+                            SELECT
+                                COUNT(*) as agentcount,
+                                lead_id
+                            FROM
+                                `vicidial_closer_log`
+                            WHERE
+                                lead_id IN (SELECT lead_id FROM `vicidial_closer_log` WHERE campaign_id = '" . $db->escape_string($this->id) . "')
+                            AND
+                                start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                            " . ( $additional_where != "" ? "AND " . $additional_where : "" ) . "
+                            GROUP BY lead_id
+                        ) a
+                    WHERE
+                        agentcount = 1";
+
+        $result = $db->query($sql);
+        if ($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $row['num'];
+        } else {
+            return false;
+        }
     }
 }

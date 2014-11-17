@@ -13,3 +13,6 @@ require "class/class.Agent.php";
 $db = new MySQLi('127.0.0.1', 'cron', '1234', 'asterisk');
 
 $data = new Campaign_Inbound('CS');
+
+echo "Direct: " . $data->byQueue('BUYM_CS')->getTotalDirect();
+echo "Direct Answered: " . $data->byQueue('BUYM_CS')->getTotalDirectAnswered();
