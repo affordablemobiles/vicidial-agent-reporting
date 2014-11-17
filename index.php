@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', 'On');
+
 require "class/class.Queue.php";
 require "class/class.Campaign.php";
 require "class/class.Campaign_Inbound.php";

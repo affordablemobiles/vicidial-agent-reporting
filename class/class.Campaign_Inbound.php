@@ -25,13 +25,13 @@ class Campaign_Inbound {
     }
 
     private function _setTimePeriodAll(){
-        foreach ($this->qobjects as &$name => &$obj){
+        foreach ($this->qobjects as $name => &$obj){
             $obj->setTimePeriod($this->startEpoch, $this->endEpoch);
         }
     }
 
     private function _setAgentAll(){
-        foreach ($this->qobjects as &$name => &$obj){
+        foreach ($this->qobjects as $name => &$obj){
             $obj->setAgent($this->agent);
         }
     }
