@@ -104,7 +104,7 @@ class Queue {
                         ) a
                     JOIN
                         `vicidial_closer_log` b
-                            ON b.closercallid = (SELECT closercallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch DESC LIMIT 1)
+                            ON b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch DESC LIMIT 1)
                     WHERE
                         a.agentcount = 1
                     GROUP BY status";
@@ -112,10 +112,10 @@ class Queue {
         print_r($sql);
 
         $data = array();
-        /*$result = $db->query($sql);
+        $result = $db->query($sql);
         while ($row = $result->fetch_assoc()){
             $data[$row['status']] = $row['num'];
-        }*/
+        }
 
         return $data;
     }

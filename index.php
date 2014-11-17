@@ -16,4 +16,6 @@ $data = new Campaign_Inbound('CS');
 
 //echo "Direct: " . $data->byQueue('BUYM_CS')->getTotalDirect();
 //echo "Direct Answered: " . $data->byQueue('BUYM_CS')->getTotalDirectAnswered();
+print_r($data->byQueue('BUYM_CS')->getTotalByDispo());
+echo "\n";
 print_r($data->byQueue('BUYM_CS')->getTotalDirectByDispo());
