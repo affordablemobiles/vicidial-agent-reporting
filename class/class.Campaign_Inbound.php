@@ -13,6 +13,8 @@ class Campaign_Inbound {
         $this->id = $id;
 
         $this->_fetchQueues();
+        print_r($this->queues);
+        $this->_initObjects();
     }
 
     public function setTimePeriod($startEpoch, $endEpoch){
@@ -51,9 +53,16 @@ class Campaign_Inbound {
         $result = $db->query($sql);
         if ($result->num_rows == 1){
             $row = $result->fetch_assoc();
-            print_r($row);
+            $this->queues = explode(" ", $row['closer_campaigns']);
+            array_pop($this->queues);
         } else {
             die("Unable to Fetch Queues in Campaign_Inbound class: " . $this->id);
+        }
+    }
+
+    private function _initObjects(){
+        foreach ($this->queues as $q){
+            $this->qobjects[$q] = new Queue($q);
         }
     }
 
