@@ -53,7 +53,7 @@ class Campaign_Inbound {
         $result = $db->query($sql);
         if ($result->num_rows == 1){
             $row = $result->fetch_assoc();
-            $this->queues = explode(" ", $row['closer_campaigns']);
+            $this->queues = explode(" ", trim($row['closer_campaigns']));
             array_pop($this->queues);
         } else {
             die("Unable to Fetch Queues in Campaign_Inbound class: " . $this->id);
