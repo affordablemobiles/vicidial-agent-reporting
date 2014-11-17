@@ -24,18 +24,23 @@ class Queue {
     }
 
     public function getTotal(){
+        return $this->_getTotal("");
     }
 
     public function getTotalAnswered(){
+        return $this->_getTotal("status <> 'DROP' AND status <> 'AFTHRS'");
     }
 
     public function getTotalOOH(){
+        return $this->_getTotal("status = 'AFTHRS'");
     }
 
     public function getTotalDrop(){
+        return $this->_getTotal("status = 'DROP'");
     }
 
     public function getTotalAbandoned(){
+        return 0;
     }
 
     public function getTotalDirect(){
@@ -55,10 +60,87 @@ class Queue {
     }
 
     public function getTotalByDispo(){
+        global $db;
+
+        $sql = "    SELECT
+                        COUNT(*) as 'num',
+                        status
+                    FROM
+                        `vicidial_closer_log`
+                    WHERE
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    AND
+                        start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" );
+
+        $data = array();
+        $result = $db->query($sql);
+        while ($row = $result->fetch_assoc()){
+            $data[$row['status']] = $row['num'];
+        }
+
+        return $data;
     }
 
     public function getTotalDirectByDispo(){
+        global $db;
 
+        $sql = "    SELECT
+                        COUNT(*) as 'num',
+                        b.status as 'status'
+                    FROM
+                        (
+                            SELECT
+                                COUNT(*) as agentcount,
+                                lead_id
+                            FROM
+                                `vicidial_closer_log`
+                            WHERE
+                                lead_id IN (SELECT lead_id FROM `vicidial_closer_log` WHERE campaign_id = '" . $db->escape_string($this->id) . "')
+                            AND
+                                start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                            " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
+                            GROUP BY lead_id
+                        ) a
+                    JOIN
+                        `vicidial_closer_log` b
+                            ON b.closercallid = (SELECT closercallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch DESC LIMIT 1)
+                    WHERE
+                        a.agentcount = 1
+                    GROUP BY status";
+
+        print_r($sql);
+
+        $data = array();
+        /*$result = $db->query($sql);
+        while ($row = $result->fetch_assoc()){
+            $data[$row['status']] = $row['num'];
+        }*/
+
+        return $data;
+    }
+
+    private function _getTotal($additional_where){
+        global $db;
+
+        $sql = "    SELECT
+                        COUNT(*) as 'num'
+                    FROM
+                        `vicidial_closer_log`
+                    WHERE
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    AND
+                        start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                        " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
+                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" );
+
+        $result = $db->query($sql);
+        if ($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $row['num'];
+        } else {
+            return 0;
+        }
     }
 
     private function _getTotalDirect($additional_where){
