@@ -39,7 +39,7 @@ class Campaign_Data {
             $row = $result->fetch_assoc();
             return $row['status_name'];
         } else {
-            if (!is_empty($map[$k])){
+            if (!empty($map[$k])){
                 return $map[$k];
             } else {
                 return $k;
