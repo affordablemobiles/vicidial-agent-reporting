@@ -28,6 +28,10 @@ class Campaign_Data {
     public function getDispoName($k){
         global $db;
 
+        $map = array(
+                        'AFTHRS' => 'Out of Hours'
+        );
+
         $sql = "SELECT status_name FROM vicidial_campaign_statuses WHERE campaign_id = '" . $db->escape_string($this->id) . "' AND status = '" . $db->escape_string($k) . "'";
         $result = $db->query($sql);
 
@@ -35,7 +39,11 @@ class Campaign_Data {
             $row = $result->fetch_assoc();
             return $row['status_name'];
         } else {
-            die('Problem Getting Dispo Name: ' . $k);
+            if (!is_empty($map[$k])){
+                return $map[$k];
+            } else {
+                return $k;
+            }
         }
     }
 }
