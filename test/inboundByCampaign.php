@@ -14,6 +14,9 @@ foreach ($data->byInbound()->queues as $queue){
     echo "Total Calls: " . $data->byInbound()->byQueue($queue)->getTotal() . "<br />\n";
     echo "Total Direct Calls: " . $data->byInbound()->byQueue($queue)->getTotalDirect() . "<br />\n";
     echo "<br />\n";
+    echo "Offered Calls: " . $data->byInbound()->byQueue($queue)->getTotalOffered() . "<br />\n";
+    echo "Direct Offered Calls: " . $data->byInbound()->byQueue($queue)->getTotalDirectOffered() . "<br />\n";
+    echo "<br />\n";
     echo "Calls Answered: " . $data->byInbound()->byQueue($queue)->getTotalAnswered() . "<br />\n";
     echo "Direct Calls Answered: " . $data->byInbound()->byQueue($queue)->getTotalDirectAnswered() . "<br />\n";
     echo "<br />\n";

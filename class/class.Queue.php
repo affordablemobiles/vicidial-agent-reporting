@@ -27,6 +27,10 @@ class Queue {
         return $this->_getTotal("");
     }
 
+    public function getTotalOffered(){
+        return ($this->getTotal() - $this->getTotalOOH());
+    }
+
     public function getTotalAnswered(){
         return $this->_getTotal("status <> 'DROP' AND status <> 'AFTHRS'");
     }
@@ -45,6 +49,10 @@ class Queue {
 
     public function getTotalDirect(){
         return $this->_getTotalDirect("");
+    }
+
+    public function getTotalDirectOffered(){
+        return ($this->getTotalDirect() - $this->getTotalDirectOOH());
     }
 
     public function getTotalDirectAnswered(){
