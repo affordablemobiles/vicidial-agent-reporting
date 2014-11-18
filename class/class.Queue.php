@@ -48,15 +48,15 @@ class Queue {
     }
 
     public function getTotalDirectAnswered(){
-        return $this->_getTotalDirect("status <> 'DROP' AND status <> 'AFTHRS'");
+        return $this->_getTotalDirect("a.status <> 'DROP' AND a.status <> 'AFTHRS'");
     }
 
     public function getTotalDirectOOH(){
-        return $this->_getTotalDirect("status = 'AFTHRS'");
+        return $this->_getTotalDirect("a.status = 'AFTHRS'");
     }
 
     public function getTotalDirectDrop(){
-        return $this->_getTotalDirect("status = 'DROP'");
+        return $this->_getTotalDirect("a.status = 'DROP'");
     }
 
     public function getTotalByDispo(){
@@ -88,26 +88,28 @@ class Queue {
 
         $sql = "    SELECT
                         COUNT(*) as 'num',
-                        b.status as 'status'
+                        a.status as 'status'
                     FROM
                         (
                             SELECT
-                                COUNT(*) as agentcount,
-                                lead_id
+                                a.lead_id,
+                                b.campaign_id as firstcamp,
+                                b.status as status
                             FROM
-                                `vicidial_closer_log`
+                                `vicidial_closer_log` a
+                            JOIN
+                                `vicidial_closer_log` b
+                                    ON
+                                        b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                lead_id IN (SELECT lead_id FROM `vicidial_closer_log` WHERE campaign_id = '" . $db->escape_string($this->id) . "')
+                                a.campaign_id = '" . $db->escape_string($this->id) . "'
                             AND
-                                start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
-                            " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
-                            GROUP BY lead_id
+                                b.campaign_id = '" . $db->escape_string($this->id) . "'
+                            AND
+                                a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                            " . ( $this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
+                            GROUP BY lead_id, firstcamp, status
                         ) a
-                    JOIN
-                        `vicidial_closer_log` b
-                            ON b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch DESC LIMIT 1)
-                    WHERE
-                        a.agentcount = 1
                     GROUP BY status";
 
         $data = array();
@@ -150,20 +152,24 @@ class Queue {
                     FROM
                         (
                             SELECT
-                                COUNT(*) as agentcount,
-                                lead_id
+                                a.lead_id,
+                                b.campaign_id as firstcamp,
+                                b.status as status
                             FROM
-                                `vicidial_closer_log`
+                                `vicidial_closer_log` a
+                            JOIN
+                                `vicidial_closer_log` b
+                                    ON
+                                        b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                lead_id IN (SELECT lead_id FROM `vicidial_closer_log` WHERE campaign_id = '" . $db->escape_string($this->id) . "')
+                                a.campaign_id = '" . $db->escape_string($this->id) . "'
                             AND
-                                start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
-                            " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
-                            " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
-                            GROUP BY lead_id
-                        ) a
-                    WHERE
-                        agentcount = 1";
+                                b.campaign_id = '" . $db->escape_string($this->id) . "'
+                            AND
+                                a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                            " . ( $this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
+                            GROUP BY lead_id, firstcamp, status
+                        ) a";
 
         $result = $db->query($sql);
         if ($result->num_rows == 1){
