@@ -29,8 +29,18 @@ foreach ($data->byInbound()->queues as $queue){
     echo "Direct Calls Dropped: " . $data->byInbound()->byQueue($queue)->getTotalDirectDrop() . "<br />\n";
     echo "<br />\n";
     echo "<b>Calls By DISPO</b><br />\n";
-    echo str_replace("\n", "<br />\n", str_replace("\t", "&nbsp;", var_export($data->byInbound()->byQueue($queue)->getTotalByDispo(), true)));
+    dispo_table($data->byInbound()->byQueue($queue)->getTotalByDispo());
     echo "<br />\n";
     echo "<b>Direct Calls By DISPO</b><br />\n";
-    echo str_replace("\n", "<br />\n", str_replace("\t", "&nbsp;", var_export($data->byInbound()->byQueue($queue)->getTotalDirectByDispo(), true)));
+    dispo_table($data->byInbound()->byQueue($queue)->getTotalDirectByDispo());
+}
+
+function dispo_table($tdata){
+    global $data;
+
+    echo "<table style=\"border: 1px solid;\">\n";
+    foreach ($tdata as $k => $v){
+        echo "<tr><td>" . $data->fetchData()->getDispoName($k) . "</td><td>" . $v . "</td></tr>\n";
+    }
+    echo "</table>\n";
 }

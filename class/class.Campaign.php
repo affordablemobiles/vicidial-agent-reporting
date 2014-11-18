@@ -5,6 +5,7 @@ class Campaign {
 
     private $inbound;
     private $outbound;
+    private $data;
 
     private $startEpoch;
     private $endEpoch;
@@ -18,6 +19,7 @@ class Campaign {
 
         $this->inbound = new Campaign_Inbound($this->id);
         $this->outbound = new Campaign_Outbound($this->id);
+        $this->data = new Campaign_Data($this->id);
     }
 
     public function setTimePeriod($startEpoch, $endEpoch){
@@ -28,6 +30,7 @@ class Campaign {
 
         $this->inbound->setTimePeriod($this->startEpoch, $this->endEpoch);
         $this->outbound->setTimePeriod($this->startEpoch, $this->endEpoch);
+        $this->data->setTimePeriod($this->startEpoch, $this->endEpoch);
     }
 
     public function setAgent($agent){
@@ -35,6 +38,7 @@ class Campaign {
 
         $this->inbound->setAgent($this->agent);
         $this->outbound->setAgent($this->agent);
+        $this->data->setAgent($this->agent);
     }
 
     public function byInbound(){
@@ -43,5 +47,9 @@ class Campaign {
 
     public function byOutbound(){
         return $this->outbound;
+    }
+
+    public function fetchData(){
+        return $this->data;
     }
 }
