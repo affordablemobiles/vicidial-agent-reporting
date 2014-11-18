@@ -167,6 +167,7 @@ class Queue {
                                 b.campaign_id = '" . $db->escape_string($this->id) . "'
                             AND
                                 a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                            " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
                             " . ( $this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                             GROUP BY lead_id, firstcamp, status
                         ) a";
