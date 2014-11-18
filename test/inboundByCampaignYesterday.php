@@ -38,7 +38,7 @@ foreach ($data->byInbound()->queues as $queue){
 function dispo_table($tdata){
     global $data;
 
-    echo "<table style=\"border: 1px solid;\">\n";
+    echo "<table border=\"1\">\n";
     foreach ($tdata as $k => $v){
         echo "<tr><td>" . $data->fetchData()->getDispoName($k) . "</td><td>" . $v . "</td></tr>\n";
     }
