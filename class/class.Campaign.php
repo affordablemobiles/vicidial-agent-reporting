@@ -36,4 +36,12 @@ class Campaign {
         $this->inbound->setAgent($this->agent);
         $this->outbound->setAgent($this->agent);
     }
+
+    public function byInbound(){
+        return $this->inbound;
+    }
+
+    public function byOutbound(){
+        return $this->outbound;
+    }
 }
