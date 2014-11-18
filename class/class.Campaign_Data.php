@@ -28,7 +28,7 @@ class Campaign_Data {
     public function getDispoName($k){
         global $db;
 
-        $sql = "SELECT status_name FROM vicidial_campaign_statuses WHERE campaign_id = '" . $db->escape_string($id) . "' AND status = '" . $db->escape_string($k) . "'";
+        $sql = "SELECT status_name FROM vicidial_campaign_statuses WHERE campaign_id = '" . $db->escape_string($this->id) . "' AND status = '" . $db->escape_string($k) . "'";
         $result = $db->query($sql);
 
         if ($result->num_rows == 1){
