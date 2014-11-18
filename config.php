@@ -10,5 +10,6 @@ require __DIR__ . "/class/class.Campaign_Inbound.php";
 require __DIR__ . "/class/class.Campaign_Outbound.php";
 require __DIR__ . "/class/class.Campaign_Data.php";
 require __DIR__ . "/class/class.Agent.php";
+require __DIR__ . "/class/class.Call_Times.php";
 
 $db = new MySQLi('127.0.0.1', 'cron', '1234', 'asterisk');

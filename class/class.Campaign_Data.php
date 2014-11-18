@@ -25,6 +25,11 @@ class Campaign_Data {
         $this->agent = $agent;
     }
 
+    public function fetchCallTimes(){
+        $obj = new Call_Times();
+        return $obj->byCampaign($this->id);
+    }
+
     public function getDispoName($k){
         global $db;
 

@@ -24,4 +24,9 @@ class Campaign_Outbound {
     public function setAgent($agent){
         $this->agent = $agent;
     }
+
+    public function fetchCallTimes(){
+        $obj = new Call_Times();
+        return $obj->byCampaign($this->id)->byOutbound();
+    }
 }
