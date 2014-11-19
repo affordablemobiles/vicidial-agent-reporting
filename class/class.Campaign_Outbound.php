@@ -31,4 +31,55 @@ class Campaign_Outbound {
         $obj->setAgent($this->agent);
         return $obj->byCampaign($this->id)->byOutbound();
     }
+
+    public function getTotal(){
+        return $this->_getTotal("");
+    }
+
+    public function getTotalByDispo(){
+        global $db;
+
+        $sql = "    SELECT
+                        COUNT(*) as 'num',
+                        status
+                    FROM
+                        `vicidial_log`
+                    WHERE
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    AND
+                        start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
+                    GROUP BY status";
+
+        $data = array();
+        $result = $db->query($sql);
+        while ($row = $result->fetch_assoc()){
+            $data[$row['status']] = $row['num'];
+        }
+
+        return $data;
+    }
+
+    private function _getTotal($additional_where){
+        global $db;
+
+        $sql = "    SELECT
+                        COUNT(*) as 'num'
+                    FROM
+                        `vicidial_log`
+                    WHERE
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    AND
+                        start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
+                        " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
+                        " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" );
+
+        $result = $db->query($sql);
+        if ($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $row['num'];
+        } else {
+            return 0;
+        }
+    }
 }
