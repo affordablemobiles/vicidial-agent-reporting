@@ -6,7 +6,7 @@
 |   Access via Campaign_Data, Campaign_Inbound or Campaign_Outbound
 |       $camp->fetchData()->fetchCallTimes()->...
 |       $camp->byInbound()->fetchCallTimes()->...
-|       $camp->byOutgoing()->fetchCallTimes()->...
+|       $camp->byOutbound()->fetchCallTimes()->...
 |  ----
 |   Apply filters by chaining the filter functions...
 |       $camp->fetchData()->fetchCallTimes()->byInbound()->byQueue('BUYM_CS')->byAgent('lrobinson')->byDispo('XFER2S')->getAVGHandleTime();
@@ -46,7 +46,7 @@ class Call_Times {
         return $this;
     }
 
-    public function byOutgoing(){
+    public function byOutbound(){
         $this->inorout = "out";
         return $this;
     }
