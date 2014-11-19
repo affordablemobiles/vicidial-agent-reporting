@@ -27,7 +27,7 @@ echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
     </tr>
     <?php
     $queues = $data->byInbound()->queues;
-    if(($key = array_search("AGENTDIRECT", $messages)) !== false) {
+    if(($key = array_search("AGENTDIRECT", $queues)) !== false) {
         unset($queues[$key]);
     }
     $total = $data->byInbound()->byQueue($queues)->getTotalAnswered();
