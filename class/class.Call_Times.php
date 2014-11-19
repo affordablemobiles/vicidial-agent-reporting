@@ -92,7 +92,7 @@ class Call_Times {
                         a.event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND a.event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
                     AND
                         a.status IS NOT NULL
-                    " . ($this->campaign != "" ? " AND a.campaign_id = '" . $db->escape_string($this->campaign_id) . "'" : "" ) . "
+                    " . ($this->campaign != "" ? " AND a.campaign_id = '" . $db->escape_string($this->campaign) . "'" : "" ) . "
                     " . ($this->inorout != "all" ? ( " AND b.uniqueid IS " . ($this->inorout == "out" ? "NOT" : "") . "NULL") : "" ) . "
                     " . ($this->queue != "" ? " AND c.campaign_id = '" . $db->escape_string($this->queue) . "'" : "" ) . "
                     " . ($this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
