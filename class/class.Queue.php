@@ -7,6 +7,13 @@ class Queue {
     private $agent;
 
     public function __construct($id) {
+        global $db;
+
+        if (is_array($id)){
+            foreach($id as &$q){
+                $q = $db->escape_string($q);
+            }
+        }
         $this->id = $id;
         $this->startEpoch = mktime(0, 0, 0);
         $this->endEpoch = mktime(23, 59, 59);
@@ -76,7 +83,7 @@ class Queue {
                     FROM
                         `vicidial_closer_log`
                     WHERE
-                        campaign_id = '" . $db->escape_string($this->id) . "'
+                        campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                     AND
                         start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                         " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
@@ -110,9 +117,9 @@ class Queue {
                                     ON
                                         b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                a.campaign_id = '" . $db->escape_string($this->id) . "'
+                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
-                                b.campaign_id = '" . $db->escape_string($this->id) . "'
+                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
                                 a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                             " . ( $this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
@@ -137,7 +144,7 @@ class Queue {
                     FROM
                         `vicidial_closer_log`
                     WHERE
-                        campaign_id = '" . $db->escape_string($this->id) . "'
+                        campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                     AND
                         start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                         " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
@@ -170,9 +177,9 @@ class Queue {
                                     ON
                                         b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                a.campaign_id = '" . $db->escape_string($this->id) . "'
+                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
-                                b.campaign_id = '" . $db->escape_string($this->id) . "'
+                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
                                 a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                             " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "

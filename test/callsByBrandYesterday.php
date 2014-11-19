@@ -50,5 +50,21 @@ echo "<b>OOH Percentage is of total calls, not calls offered, which is not shown
             echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGWrapTime()) . "</td>\n";
         echo "</tr>\n";
     }
+        echo "<tr>\n";
+            echo "<td><b>Total</b></td>\n";
+            echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOffered() . "</td>\n";
+            echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalDirectOffered() . "</td>\n";
+            echo "<td>" . @round(( ( $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalDirectOffered() / $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOffered() ) * 100 )) . "%</td>\n";
+            echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalAnswered() . "</td>\n";
+            echo "<td>" . @round(( ( $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalAnswered() / $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOffered() ) * 100 )) . "%</td>\n";
+            echo "<td>N/A</td>\n";
+            echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOOH() . "</td>\n";
+            echo "<td>" . @round(( ( $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOOH() / $data->byInbound()->byQueue($data->byInbound()->queues)->getTotal() ) * 100 )) . "%</td>\n";
+            echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalDrop() . "</td>\n";
+            echo "<td>" . @round(( ( $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalDrop() / $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalOffered() ) * 100 )) . "%</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->getAVGHandleTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->getAVGWaitTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->getAVGWrapTime()) . "</td>\n";
+        echo "</tr>\n";
     ?>
 </table>
