@@ -74,6 +74,7 @@ class Campaign_Inbound {
 
     public function fetchCallTimes(){
         $obj = new Call_Times();
+        $obj->setTimePeriod($this->startEpoch, $this->endEpoch);
         return $obj->byCampaign($this->id)->byInbound();
     }
 
