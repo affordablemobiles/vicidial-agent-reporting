@@ -5,11 +5,11 @@
 |  ----
 |   Access via Campaign_Data, Campaign_Inbound or Campaign_Outbound
 |       $camp->fetchData()->fetchCallTimes()->...
-|       $camp->byIncoming()->fetchCallTimes()->...
+|       $camp->byInbound()->fetchCallTimes()->...
 |       $camp->byOutgoing()->fetchCallTimes()->...
 |  ----
 |   Apply filters by chaining the filter functions...
-|       $camp->fetchData()->fetchCallTimes()->byIncoming()->byQueue('BUYM_CS')->byAgent('lrobinson')->byDispo('XFER2S')->getAVGHandleTime();
+|       $camp->fetchData()->fetchCallTimes()->byInbound()->byQueue('BUYM_CS')->byAgent('lrobinson')->byDispo('XFER2S')->getAVGHandleTime();
 |  ---- */
 
 class Call_Times {
@@ -37,7 +37,7 @@ class Call_Times {
         $this->agent = $agent;
     }
 
-    public function byIncoming(){
+    public function byInbound(){
         $this->inorout = "in";
         return $this;
     }
@@ -97,6 +97,8 @@ class Call_Times {
                     " . ($this->queue != "" ? " AND c.campaign_id = '" . $db->escape_string($this->queue) . "'" : "" ) . "
                     " . ($this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                     " . ($this->dispo != "" ? " AND a.status = '" . $db->escape_string($this->dispo) . "'" : "" );
+
+        die($sql);
 
         $result = $db->query($sql);
         if ($result->num_rows == 1){
