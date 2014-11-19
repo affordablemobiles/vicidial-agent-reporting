@@ -17,7 +17,7 @@ $queues = $data->byInbound()->queues;
 if(($key = array_search("AGENTDIRECT", $queues)) !== false) {
     unset($queues[$key]);
 }
-foreach ($queues as $queue)
+foreach ($queues as $queue){
     echo "<h2>Queue: " . $queue . "</h2>\n";
 ?>
 <table border="1">
