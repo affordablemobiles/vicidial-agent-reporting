@@ -112,7 +112,7 @@ class Call_Times {
                         vicidial_closer_log c
                             ON a.uniqueid = c.uniqueid
                     JOIN
-                        parked_log d
+                        park_log d
                             ON a.uniqueid = d.uniqueid
                     WHERE
                         a.event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND a.event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
@@ -123,8 +123,6 @@ class Call_Times {
                     " . ($this->queue != "" ? " AND c.campaign_id = '" . $db->escape_string($this->queue) . "'" : "" ) . "
                     " . ($this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                     " . ($this->dispo != "" ? " AND a.status = '" . $db->escape_string($this->dispo) . "'" : "" );
-
-        print_r($sql);
 
         $result = $db->query($sql);
         if ($result->num_rows == 1){
@@ -370,7 +368,7 @@ class Call_Times {
                         vicidial_closer_log c
                             ON a.uniqueid = c.uniqueid
                     JOIN
-                        parked_log d
+                        park_log d
                             ON a.uniqueid = d.uniqueid
                     WHERE
                         a.event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND a.event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
