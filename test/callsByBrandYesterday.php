@@ -12,7 +12,7 @@ $yday_end = mktime(23,59,59) - (24*3600);
 $data->setTimePeriod($yday_start, $yday_end);
 
 echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
-
+echo "<b>OOH Percentage is of total calls, not calls offered, which is not shown. This is why you could have 100% answered and 33% OOH for the same queue.</b><br />\n";
 ?>
 <table border="1">
     <tr>
