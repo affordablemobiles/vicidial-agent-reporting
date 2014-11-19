@@ -40,7 +40,7 @@ foreach ($data->fetchData()->getAgents() as $agent){
 }
 $data->setAgent(NULL);
     echo "<tr>\n";
-        echo "<td><b>" . Total . "</b></td>\n";
+        echo "<td><b>Total</b></td>\n";
         echo "<td>" . $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalAnswered() . "</td>\n";
         echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->getAVGTalkTime()) . "</td>\n";
         echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->getAVGHoldTime()) . "</td>\n";

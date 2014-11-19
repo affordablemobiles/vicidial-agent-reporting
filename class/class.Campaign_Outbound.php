@@ -28,6 +28,7 @@ class Campaign_Outbound {
     public function fetchCallTimes(){
         $obj = new Call_Times();
         $obj->setTimePeriod($this->startEpoch, $this->endEpoch);
+        $obj->setAgent($this->agent);
         return $obj->byCampaign($this->id)->byOutbound();
     }
 }
