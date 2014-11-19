@@ -45,9 +45,9 @@ echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
             echo "<td>" . @round(( ( $data->byInbound()->byQueue($queue)->getTotalOOH() / $data->byInbound()->byQueue($queue)->getTotal() ) * 100 )) . "%</td>\n";
             echo "<td>" . $data->byInbound()->byQueue($queue)->getTotalDrop() . "</td>\n";
             echo "<td>" . @round(( ( $data->byInbound()->byQueue($queue)->getTotalDrop() / $data->byInbound()->byQueue($queue)->getTotalOffered() ) * 100 )) . "%</td>\n";
-            echo "<td>" . date("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGHandleTime()) . "</td>\n";
-            echo "<td>" . date("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGWaitTime()) . "</td>\n";
-            echo "<td>" . date("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGDispoTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGHandleTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGWaitTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byQueue($queue)->getAVGDispoTime()) . "</td>\n";
         echo "</tr>\n";
     }
     ?>
