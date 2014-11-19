@@ -35,7 +35,7 @@ echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
         echo "<tr>\n";
             echo "<td>" . $data->fetchData()->getDispoName($d) . "</td>\n";
             echo "<td>" . $c . "</td>\n";
-            echo "<td>" . round( ( $c / $total ) * 100 ) . "</td>\n";
+            echo "<td>" . @round( ( $c / $total ) * 100 ) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byDispo($d)->getAVGTalkTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byDispo($d)->getAVGHoldTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->byInbound()->fetchCallTimes()->byDispo($d)->getAVGDispoTime()) . "</td>\n";
