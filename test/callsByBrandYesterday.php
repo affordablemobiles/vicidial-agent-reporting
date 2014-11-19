@@ -14,7 +14,7 @@ $data->setTimePeriod($yday_start, $yday_end);
 echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
 
 ?>
-<table>
+<table border="1">
     <tr>
         <th>Queue Name</th>
         <th>Calls Offered</th>
