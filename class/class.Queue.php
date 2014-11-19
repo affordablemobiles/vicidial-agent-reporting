@@ -83,7 +83,7 @@ class Queue {
                     FROM
                         `vicidial_closer_log`
                     WHERE
-                        campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                        campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                     AND
                         start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                         " . ( $this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
@@ -117,9 +117,9 @@ class Queue {
                                     ON
                                         b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
-                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
                                 a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                             " . ( $this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
@@ -144,7 +144,7 @@ class Queue {
                     FROM
                         `vicidial_closer_log`
                     WHERE
-                        campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                        campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                     AND
                         start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                         " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
@@ -177,9 +177,9 @@ class Queue {
                                     ON
                                         b.closecallid = (SELECT closecallid FROM `vicidial_closer_log` WHERE lead_id = a.lead_id ORDER BY end_epoch ASC LIMIT 1)
                             WHERE
-                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                                a.campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
-                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . explode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
+                                b.campaign_id " . (is_array($this->id) ? " IN ( '" . implode("', '", $this->id) . "' )" : " = '" . $db->escape_string($this->id) . "'" ) . "
                             AND
                                 a.start_epoch > '" . $db->escape_string($this->startEpoch) . "' AND  a.start_epoch < '" . $db->escape_string($this->endEpoch) . "'
                             " . ( $additional_where != "" ? " AND " . $additional_where : "" ) . "
