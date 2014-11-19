@@ -98,8 +98,6 @@ class Call_Times {
                     " . ($this->agent != "" ? " AND a.user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                     " . ($this->dispo != "" ? " AND a.status = '" . $db->escape_string($this->dispo) . "'" : "" );
 
-        die($sql);
-
         $result = $db->query($sql);
         if ($result->num_rows == 1){
             $row = $result->fetch_assoc();
