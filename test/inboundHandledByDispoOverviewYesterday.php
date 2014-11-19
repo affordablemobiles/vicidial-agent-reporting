@@ -26,8 +26,12 @@ echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
         <th>Average Wrap Time</th>
     </tr>
     <?php
-    $total = $data->byInbound()->byQueue($data->byInbound()->queues)->getTotalAnswered();
-    foreach ($data->byInbound()->byQueue($data->byInbound()->queues)->getTotalByDispo() as $d => $c){
+    $queues = $data->byInbound()->queues;
+    if(($key = array_search("AGENTDIRECT", $messages)) !== false) {
+        unset($queues[$key]);
+    }
+    $total = $data->byInbound()->byQueue($queues)->getTotalAnswered();
+    foreach ($data->byInbound()->byQueue($queues)->getTotalByDispo() as $d => $c){
         echo "<tr>\n";
             echo "<td>" . $data->fetchData()->getDispoName($d) . "</td>\n";
             echo "<td>" . $c . "</td>\n";
