@@ -53,6 +53,21 @@ class Campaign_Data {
         }
     }
 
+    public function getQueueName($k){
+        global $db;
+
+        $sql = "SELECT group_name FROM vicidial_inbound_groups WHERE group_id = '" . $db->escape_string($k) . "'";
+
+        $result = $db->query($sql);
+
+        if ($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $row['group_name'];
+        } else {
+            return $k;
+        }
+    }
+
     public function getAgents(){
         global $db;
 
