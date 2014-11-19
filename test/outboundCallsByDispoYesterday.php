@@ -26,7 +26,7 @@ echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
         <th>Average Wrap Time</th>
     </tr>
     <?php
-    $total = $data->byOutbound()->getTotal;
+    $total = $data->byOutbound()->getTotal();
     foreach ($data->byOutbound()->getTotalByDispo() as $d => $c){
         echo "<tr>\n";
             echo "<td>" . $data->fetchData()->getDispoName($d) . "</td>\n";
