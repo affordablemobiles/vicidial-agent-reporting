@@ -52,4 +52,28 @@ class Campaign_Data {
             }
         }
     }
+
+    public function getAgents(){
+        global $db;
+
+        $sql = "    SELECT
+                        a.user as 'agent'
+                    FROM
+                        vicidial_agent_log a
+                    WHERE
+                        a.event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND a.event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
+                    AND
+                        a.campaign_id = '" . $db->escape_string($this->id) . "'
+                    GROUP BY a.user";
+
+        $result = $db->query($sql);
+
+        $agents = array();
+
+        while($row = $result->fetch_assoc()){
+              $agents[] = $row['agent'];
+        }
+
+        return $agents;
+    }
 }
