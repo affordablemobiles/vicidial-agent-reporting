@@ -79,7 +79,12 @@ class Campaign_Inbound {
     }
 
     public function byQueue($qid){
-        if (is_object($this->qobjects[$qid])){
+        if (is_array($qid)){
+            $obj = new Queue($qid);
+            $obj->setTimePeriod($this->startEpoch, $this->endEpoch);
+            $obj->setAgent($this->agent);
+            return $obj;
+        } else if (@is_object($this->qobjects[$qid])){
             return $this->qobjects[$qid];
         } else {
             return false;
