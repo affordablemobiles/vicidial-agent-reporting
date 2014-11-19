@@ -266,7 +266,7 @@ class Call_Times {
         global $db;
 
         $sql = "    SELECT
-                        AVG(disp_sec+dead_sec) as 'num'
+                        AVG(dispo_sec+dead_sec) as 'num'
                     FROM
                         vicidial_agent_log a
                     LEFT OUTER JOIN
@@ -522,7 +522,7 @@ class Call_Times {
         global $db;
 
         $sql = "    SELECT
-                        SUM(disp_sec+dead_sec) as 'num'
+                        SUM(dispo_sec+dead_sec) as 'num'
                     FROM
                         vicidial_agent_log a
                     LEFT OUTER JOIN
