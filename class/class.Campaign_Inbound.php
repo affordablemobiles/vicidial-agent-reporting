@@ -74,7 +74,7 @@ class Campaign_Inbound {
 
     public function fetchCallTimes(){
         $obj = new Call_Times();
-        return $obj->byCampaign($this->id)->byIncoming();
+        return $obj->byCampaign($this->id)->byInbound();
     }
 
     public function byQueue($qid){
