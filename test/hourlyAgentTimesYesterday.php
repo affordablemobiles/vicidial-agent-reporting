@@ -48,7 +48,7 @@ foreach ($data->fetchData()->getAgents() as $agent){
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDispoTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDeadTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWaitTime()) . "</td>\n";
-            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPauseTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPausedTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWrapTime()) . "</td>\n";
         echo "</tr>\n";
     }
@@ -62,7 +62,7 @@ foreach ($data->fetchData()->getAgents() as $agent){
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDispoTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDeadTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWaitTime()) . "</td>\n";
-            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPauseTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPausedTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWrapTime()) . "</td>\n";
         echo "</tr>\n";
     ?>
