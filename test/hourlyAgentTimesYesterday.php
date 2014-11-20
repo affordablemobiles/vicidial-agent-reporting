@@ -62,3 +62,5 @@ foreach ($data->fetchData()->getAgents() as $agent){
         echo "</tr>\n";
     ?>
 </table>
+<?php
+}
