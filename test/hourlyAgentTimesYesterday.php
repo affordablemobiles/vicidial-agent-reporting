@@ -30,7 +30,8 @@ foreach ($data->fetchData()->getAgents() as $agent){
         <th>Park Time</th>
         <th>Dispo Time</th>
         <th>Dead Time</th>
-        <th>Handle Time</th>
+        <th>Wait Time</th>
+        <th>Pause Time</th>
         <th>Wrap Time</th>
     </tr>
     <?php
@@ -46,7 +47,8 @@ foreach ($data->fetchData()->getAgents() as $agent){
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalHoldTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDispoTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDeadTime()) . "</td>\n";
-            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalHandleTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWaitTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPauseTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWrapTime()) . "</td>\n";
         echo "</tr>\n";
     }
@@ -59,7 +61,8 @@ foreach ($data->fetchData()->getAgents() as $agent){
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalHoldTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDispoTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalDeadTime()) . "</td>\n";
-            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalHandleTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWaitTime()) . "</td>\n";
+            echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalPauseTime()) . "</td>\n";
             echo "<td>" . gmdate("H:i:s", (int)$data->fetchData()->fetchCallTimes()->getTotalWrapTime()) . "</td>\n";
         echo "</tr>\n";
     ?>
