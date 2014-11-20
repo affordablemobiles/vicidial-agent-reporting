@@ -13,6 +13,8 @@ function yday($time){
 $yday_start = yday(mktime(0,0,0));
 $yday_end = yday(mktime(23,59,59));
 
+$data->setTimePeriod($yday_start, $yday_end);
+
 echo "<h1>Data For Campaign: " . $camp . "</h1>\n";
 
 foreach ($data->fetchData()->getAgents() as $agent){
