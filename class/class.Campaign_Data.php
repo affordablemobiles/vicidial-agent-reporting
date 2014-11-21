@@ -98,7 +98,7 @@ class Campaign_Data {
 
         $sql = "    SELECT
                         user,
-                        UNIX_TIMESTAMP(event_time) as time
+                        UNIX_TIMESTAMP(MIN(event_time)) as time
                     FROM
                         vicidial_agent_log
                     WHERE
@@ -108,8 +108,7 @@ class Campaign_Data {
                     AND
                         campaign_id = '" . $db->escape_string($this->id) . "'
                     " . ($this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
-                    GROUP BY user
-                    ORDER BY event_time ASC";
+                    GROUP BY user";
 
         $result = $db->query($sql);
 
@@ -134,7 +133,7 @@ class Campaign_Data {
 
         $sql = "    SELECT
                         user,
-                        UNIX_TIMESTAMP(event_time) as time
+                        UNIX_TIMESTAMP(MAX(event_time)) as time
                     FROM
                         vicidial_agent_log
                     WHERE
@@ -142,8 +141,7 @@ class Campaign_Data {
                     AND
                         campaign_id = '" . $db->escape_string($this->id) . "'
                     " . ($this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
-                    GROUP BY user
-                    ORDER BY event_time DESC";
+                    GROUP BY user";
 
         $result = $db->query($sql);
 
