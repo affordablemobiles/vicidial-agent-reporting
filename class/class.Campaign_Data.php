@@ -107,6 +107,7 @@ class Campaign_Data {
                         event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
                     AND
                         campaign_id = '" . $db->escape_string($this->id) . "'
+                    " . ($this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                     GROUP BY user
                     ORDER BY event_time ASC";
 
@@ -140,6 +141,7 @@ class Campaign_Data {
                         event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
                     AND
                         campaign_id = '" . $db->escape_string($this->id) . "'
+                    " . ($this->agent != "" ? " AND user = '" . $db->escape_string($this->agent) . "'" : "" ) . "
                     GROUP BY user
                     ORDER BY event_time DESC";
 
