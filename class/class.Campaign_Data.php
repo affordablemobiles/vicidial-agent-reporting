@@ -92,4 +92,72 @@ class Campaign_Data {
 
         return $agents;
     }
+
+    public function getLoginTimes(){
+        global $db;
+
+        $sql = "    SELECT
+                        user,
+                        UNIX_TIMESTAMP(event_time) as time
+                    FROM
+                        vicidial_agent_log
+                    WHERE
+                        sub_status = 'LOGIN'
+                    AND
+                        event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
+                    AND
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    GROUP BY user
+                    ORDER BY event_time ASC";
+
+        $result = $db->query($sql);
+
+        if ($result->num_rows > 0){
+            if ( (!empty($this->agent)) && ($result->num_rows == 1) ){
+                $row = $result->fetch_assoc();
+                return $row['time'];
+            } else {
+                $data = array();
+                while ($row = $result->fetch_assoc()){
+                    $data[$row['user']] = $row['time'];
+                }
+                return $data;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public function getLastActivity(){
+        global $db;
+
+        $sql = "    SELECT
+                        user,
+                        UNIX_TIMESTAMP(event_time) as time
+                    FROM
+                        vicidial_agent_log
+                    WHERE
+                        event_time > FROM_UNIXTIME('" . $db->escape_string($this->startEpoch) . "') AND event_time < FROM_UNIXTIME('" . $db->escape_string($this->endEpoch) . "')
+                    AND
+                        campaign_id = '" . $db->escape_string($this->id) . "'
+                    GROUP BY user
+                    ORDER BY event_time DESC";
+
+        $result = $db->query($sql);
+
+        if ($result->num_rows > 0){
+            if ( (!empty($this->agent)) && ($result->num_rows == 1) ){
+                $row = $result->fetch_assoc();
+                return $row['time'];
+            } else {
+                $data = array();
+                while ($row = $result->fetch_assoc()){
+                    $data[$row['user']] = $row['time'];
+                }
+                return $data;
+            }
+        } else {
+            return 0;
+        }
+    }
 }
